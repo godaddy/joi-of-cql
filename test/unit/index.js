@@ -212,12 +212,13 @@ describe('joi-of-cql', function () {
     });
 
     describe('.json', function () {
+      var schema = {
+        id: joiOfCql.cql.uuid({ default: 'v4' }),
+        properties: joiOfCql.cql.map('', joiOfCql.cql.json()),
+        phones: joiOfCql.cql.json()
+      };
+
       it('should serialize to a string on validation', function () {
-        var schema = {
-          id: joiOfCql.cql.uuid({ default: 'v4' }),
-          properties: joiOfCql.cql.map('', joiOfCql.cql.json()),
-          phones: joiOfCql.cql.json()
-        };
         var target = {
           phones: {
             $default: '415-789-3456',
@@ -230,6 +231,21 @@ describe('joi-of-cql', function () {
           }
         };
         var result = joiOfCql.validate(target, schema, { context: { operation: 'create' } });
+        assume(result.error).eqls(null);
+        assume(result.value.phones).is.a('string');
+        assume(JSON.parse(result.value.phones)).deep.equals(target.phones);
+        assume(JSON.parse(result.value.properties.audioSomething)).deep.equals(target.properties.audioSomething);
+      });
+
+      it('should accept an array', function () {
+        var target = {
+          phones: ['415-789-3456', '415-678-9087'],
+          properties: {
+            audioSomething: [{ test: 123 }]
+          }
+        };
+        var result = joiOfCql.validate(target, schema, { context: { operation: 'create' } });
+        assume(result.error).eqls(null);
         assume(result.value.phones).is.a('string');
         assume(JSON.parse(result.value.phones)).deep.equals(target.phones);
         assume(JSON.parse(result.value.properties.audioSomething)).deep.equals(target.properties.audioSomething);

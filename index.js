@@ -225,17 +225,27 @@ types.cql = {
       .max(0x7fffffff);
   },
   /**
-   * @param {Object} object - the definition object for joi.object(object)
+   * @param {Object} [object] - the definition object for joi.object(object)
    * @see {@link https://github.com/hapijs/joi/blob/v8.0.4/API.md#object}
    * @returns {Joi} - the validator
    */
   json: function (object) {
-    return convertToJsonOnValidate(joi.object(object).meta({
-      cql: true,
-      type: 'text',
-      serialize: JSON.stringify,
-      deserialize: JSON.parse
-    }));
+    if (object) {
+      return convertToJsonOnValidate(joi.object(object).meta({
+        cql: true,
+        type: 'text',
+        serialize: JSON.stringify,
+        deserialize: JSON.parse
+      }));
+    }
+    return convertToJsonOnValidate(
+      joi.any().meta({
+        cql: true,
+        type: 'text',
+        serialize: JSON.stringify,
+        deserialize: JSON.parse
+      })
+    );
   },
   text: function () {
     return joi.string().allow('').strict(true).meta({ cql: true, type: 'text' });
