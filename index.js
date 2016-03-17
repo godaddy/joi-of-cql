@@ -36,7 +36,7 @@ var undef;
 // validation schema.
 //
 var proto = joi.object().constructor.prototype;
-var slice = Array.prototype.slice.call;
+var slice = Array.prototype.slice.call.bind(Array.prototype.slice);
 
 /**
  * Defining or retrieving lookup key names
