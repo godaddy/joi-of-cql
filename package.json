@@ -1,6 +1,6 @@
 {
   "name": "joi-of-cql",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Create cql type definitions from joi schema validations",
   "main": "index.js",
   "scripts": {
