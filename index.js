@@ -444,11 +444,25 @@ function defaultify(type, validator, options) {
  * @returns {JoiMetaDefinition} - the result
  */
 function findMeta(any, key) {
-  key = key || 'cql';
-  var meta = (any.describe().meta || []).filter(function (m) {
-    return key in m;
-  });
-  return meta[meta.length - 1];
+  var searchKey = key || 'cql';
+  var isCql = searchKey === 'cql';
+  var meta = {};
+  var allMetas = (any.describe().meta || []);
+  var found = false;
+  for (var i = 0; i < allMetas.length; i++) {
+    if (found || (searchKey in allMetas[i])) {
+      if (isCql) {
+        // If 'cql', merge all subsequent metadata in
+        Object.assign(meta, allMetas[i]);
+      } else {
+        // Otherwise, find last instance of that key
+        meta = allMetas[i];
+      }
+      found = true;
+    }
+  }
+
+  return found ? meta : void 0;
 }
 
 /**

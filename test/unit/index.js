@@ -211,6 +211,41 @@ describe('joi-of-cql', function () {
       describe('.' + type, generateDescription(type, examples[type]));
     });
 
+    describe('.meta', function () {
+      var schema = {
+        id: joiOfCql.cql.uuid({ default: 'v4' }),
+        anotherId: joiOfCql.cql.uuid({ default: 'v4' }).meta({ some: 'metadata' }),
+        someField: joiOfCql.cql.int()
+          .meta({ some: 'metadata' })
+          .meta({ more: 'metadata' })
+          .meta({ some: 'overwritten' })
+      };
+
+      it('should merge metadata into CQL metadata', function () {
+        var cqlSchema = joiOfCql.object(schema).toCql();
+        assume(joiOfCql.object(schema).toCql().id)
+          .deep.equals({
+            cql: true,
+            type: 'uuid',
+            default: 'v4'
+          });
+        assume(cqlSchema.anotherId)
+          .deep.equals({
+            cql: true,
+            type: 'uuid',
+            default: 'v4',
+            some: 'metadata'
+          });
+        assume(cqlSchema.someField)
+          .deep.equals({
+            cql: true,
+            type: 'int',
+            some: 'overwritten',
+            more: 'metadata'
+          });
+      });
+    });
+
     describe('.json', function () {
       var schema = {
         id: joiOfCql.cql.uuid({ default: 'v4' }),
