@@ -1,4 +1,4 @@
-'use strict';
+
 
 var assume = require('assume');
 var undef;
@@ -93,12 +93,12 @@ describe('joi-of-cql', function () {
         failing: ['', 'a', '2011-02-03Z', {}, []],
         defaults: {
           create: {
-            create: /^\d{4}-\d\d-\d\dT\d\d:\d\d\:\d\d\.\d+Z$/,
-            update: /^\d{4}-\d\d-\d\dT\d\d:\d\d\:\d\d\.\d+Z$/
+            create: /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d+Z$/,
+            update: /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d+Z$/
           },
           update: {
             create: undef,
-            update: /^\d{4}-\d\d-\d\dT\d\d:\d\d\:\d\d\.\d+Z$/
+            update: /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d+Z$/
           }
         }
       },
@@ -139,70 +139,70 @@ describe('joi-of-cql', function () {
       },
       list: {
         passing: [{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: ['', '123', 'abc']
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: {
-              remove: ['string']
-            }
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: {
-              append: ['string']
-            }
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: {
-              append: ['new string'],
-              remove: ['string']
-            }
+          args: [joiOfCql.cql.text().strict(true)],
+          value: ['', '123', 'abc']
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: {
+            remove: ['string']
           }
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: {
+            append: ['string']
+          }
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: {
+            append: ['new string'],
+            remove: ['string']
+          }
+        }
         ],
         failing: [{
-            args: [joiOfCql.cql.boolean()],
-            value: ['', '123', 'abc']
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: [123, 45]
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: ['', null, '54']
-          }
+          args: [joiOfCql.cql.boolean()],
+          value: ['', '123', 'abc']
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: [123, 45]
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: ['', null, '54']
+        }
         ]
       },
       set: {
         passing: [{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: ['', '123', 'abc']
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: {
-              remove: ['string']
-            }
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: {
-              add: ['string']
-            }
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: {
-              add: ['new string'],
-              remove: ['string']
-            }
+          args: [joiOfCql.cql.text().strict(true)],
+          value: ['', '123', 'abc']
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: {
+            remove: ['string']
           }
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: {
+            add: ['string']
+          }
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: {
+            add: ['new string'],
+            remove: ['string']
+          }
+        }
         ],
         failing: [{
-            args: [joiOfCql.cql.boolean()],
-            value: ['', '123', 'abc']
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: [123, 45]
-          },{
-            args: [joiOfCql.cql.text().strict(true)],
-            value: ['', null, '54']
-          }
+          args: [joiOfCql.cql.boolean()],
+          value: ['', '123', 'abc']
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: [123, 45]
+        }, {
+          args: [joiOfCql.cql.text().strict(true)],
+          value: ['', null, '54']
+        }
         ]
       }
     };
@@ -384,12 +384,12 @@ describe('joi-of-cql', function () {
 
       it('should return the last value assigned to clusteringKey/partitionKey', function () {
         var schema = joiOfCql.object().partitionKey('orion_id').partitionKey('website_id');
-        assume(schema.partitionKey()).equals('website_id')
+        assume(schema.partitionKey()).equals('website_id');
         assume(
           schema.concat(
             joiOfCql.object({ newKey: joiOfCql.cql.text() })
           ).partitionKey('older_id')
-           .partitionKey()
+            .partitionKey()
         ).equals('older_id');
       });
 
@@ -456,11 +456,11 @@ function generateDescription(type, data) {
 
     if (data.defaults) {
       Object.keys(data.defaults).forEach(function (operation) {
-        var values = data.defaults[operation]
+        var values = data.defaults[operation];
         Object.keys(values).forEach(function (value) {
           var expected = values[value];
           it('should match "' + expected + '" when given the default of "' + value + '" during a "' + operation + '" operation',
-             defaultGenerator(type, operation, value, expected)
+            defaultGenerator(type, operation, value, expected)
           );
         });
       });

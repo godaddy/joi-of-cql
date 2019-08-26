@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * Map CQL types to Joi types
@@ -123,7 +123,7 @@ var types = module.exports = joi;
 function int64(name) {
   return joi.alternatives().meta({ cql: true, type: name }).try(
     // a string that represents a number that is larger than JavaScript can handle
-    joi.string().regex(/^\-?\d{1,19}$/m),
+    joi.string().regex(/^-?\d{1,19}$/m),
     // any integer that can be represented in JavaScript
     joi.number().integer()
   );
@@ -138,7 +138,7 @@ function int64(name) {
 function decimal(name) {
   return joi.alternatives().meta({ cql: true, type: name }).try(
     // a string that represents a number that is larger than JavaScript can handle
-    joi.string().regex(/^\-?\d+(\.\d+)?$/m),
+    joi.string().regex(/^-?\d+(\.\d+)?$/m),
     // any number that can be represented in JavaScript
     joi.number()
   );
@@ -283,7 +283,7 @@ types.cql = {
   varint: function () {
     return joi.alternatives().meta({ cql: true, type: 'varint' }).try(
       // a string that represents a number that is larger than JavaScript can handle
-      joi.string().regex(/^\-?\d+$/m),
+      joi.string().regex(/^-?\d+$/m),
       // any integer that can be represented in JavaScript
       joi.number().integer()
     );
@@ -303,7 +303,7 @@ types.cql = {
       mapType: ['text', meta.type],
       serialize: convertMap(meta.serialize),
       deserialize: convertMap(meta.deserialize)
-    }).pattern(/[\-\w]+/, valueType);
+    }).pattern(/[-\w]+/, valueType);
   },
   /**
    * Create a joi object that can validate a `set` for Cassandra.
