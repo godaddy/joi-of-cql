@@ -440,6 +440,56 @@ describe('joi-of-cql', function () {
       });
     });
   });
+
+  describe('schema tests', function () {
+    let albumSchema;
+    beforeEach(function () {
+      albumSchema = joiOfCql.object({
+        artist_id: joiOfCql.cql.uuid(),
+        album_id: joiOfCql.cql.uuid(),
+        name: joiOfCql.cql.text(),
+        track_list: joiOfCql.cql.list(joiOfCql.cql.text()),
+        song_list: joiOfCql.cql.list(joiOfCql.cql.uuid()),
+        release_date: joiOfCql.cql.timestamp(),
+        create_date: joiOfCql.cql.timestamp(),
+        update_date: joiOfCql.cql.timestamp(),
+        producer: joiOfCql.cql.text()
+      }).partitionKey('artist_id')
+        .clusteringKey('album_id')
+        .rename('id', 'album_id', { ignoreUndefined: true });
+    });
+
+    it('.partitionKey() should return the defined partition key', function () {
+      assume(albumSchema.partitionKey()).equals('artist_id');
+    });
+
+    it('.clusteringKey() should return the defined clustering key', function () {
+      assume(albumSchema.clusteringKey()).equals('album_id');
+    });
+
+    it('.lookupKeys() should return an empty array', function () {
+      assume(albumSchema.lookupKeys()).deep.equals([]);
+    });
+
+    it('.aliases() should return the aliased columns', function () {
+      assume(albumSchema.aliases()).deep.equals({ id: 'album_id' });
+    });
+
+    it('.toCql() should return the CQL type schema', function () {
+      const cqlSchema = albumSchema.toCql();
+      assume(cqlSchema.artist_id.type).equals('uuid');
+      assume(cqlSchema.album_id.type).equals('uuid');
+      assume(cqlSchema.name.type).equals('text');
+      assume(cqlSchema.producer.type).equals('text');
+      assume(cqlSchema.track_list.type).equals('list');
+      assume(cqlSchema.track_list.listType).equals('text');
+      assume(cqlSchema.song_list.type).equals('list');
+      assume(cqlSchema.song_list.listType).equals('uuid');
+      assume(cqlSchema.release_date.type).equals('timestamp');
+      assume(cqlSchema.create_date.type).equals('timestamp');
+      assume(cqlSchema.update_date.type).equals('timestamp');
+    });
+  });
 });
 
 function generateDescription(type, data) {

@@ -450,18 +450,18 @@ function findMeta(any, key) {
   var allMetas = (any.describe().meta || []);
   var found = false;
   for (var i = 0; i < allMetas.length; i++) {
-    if (found || (searchKey in allMetas[i])) {
+    var hasKey = (searchKey in allMetas[i]);
+    if (found || hasKey) {
       if (isCql) {
         // If 'cql', merge all subsequent metadata in
         Object.assign(meta, allMetas[i]);
-      } else {
+      } else if (hasKey) {
         // Otherwise, find last instance of that key
         meta = allMetas[i];
       }
       found = true;
     }
   }
-
   return found ? meta : void 0;
 }
 
