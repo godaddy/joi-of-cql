@@ -13,13 +13,13 @@
   "author": "GoDaddy",
   "license": "MIT",
   "dependencies": {
-    "joi": "~8.0.0",
+    "joi": "^8.4.2",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
     "assume": "^2.2.0",
+    "eslint": "^6.7.0",
     "eslint-config-godaddy": "^4.0.0",
-    "eslint-config-godaddy-es5": "^3.1.0",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-mocha": "^5.3.0",
     "godaddy-test-tools": "^14.0.0",

@@ -14,18 +14,19 @@ describe('joi-of-cql', function () {
         0,
         1,
         -1,
-        9223372036854775807,
-        '-92233720368547758080',
+        '9223372036854775807',
+        '-9223372036854775808',
         Number.MAX_SAFE_INTEGER,
-        Number.MIN_SAFE_INTEGER,
         Number.MIN_SAFE_INTEGER
       ],
       failing: [
         '',
         Number.POSITIVE_INFINITY,
         Number.NEGATIVE_INFINITY,
+        9223372036854775807,          // Falls outside of the safe integer range, causing precision loss.
         '−9,223,372,036,854,775,808',
-        '−92233720368547758080'
+        '−9223372036854775808',       // Leading dash is not a negative sign
+        '-92233720368547758080'       // Beyond a 64 bit integer range
       ]
     };
     var stringExamples = {
