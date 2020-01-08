@@ -488,7 +488,7 @@ function convertToJsonOnValidate(any) {
   var validate = any._validate;
   any._validate = function () {
     var result = validate.apply(this, arguments);
-    if (!result.error && result.value) {
+    if (!result.error && result.value !== undefined) {
       result.value = JSON.stringify(result.value);
     }
     return result;

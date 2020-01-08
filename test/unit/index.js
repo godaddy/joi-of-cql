@@ -286,6 +286,15 @@ describe('joi-of-cql', function () {
         assume(JSON.parse(result.value.phones)).deep.equals(target.phones);
         assume(JSON.parse(result.value.properties.audioSomething)).deep.equals(target.properties.audioSomething);
       });
+
+      it('should accept an empty string', () => {
+        const target = {
+          phones: '',
+          properties: {}
+        };
+        const result = joiOfCql.validate(target, schema, { context: { operation: 'create' }});
+        assume(result.value.phones).equals('""');
+      });
     });
 
     describe('.map', function () {
