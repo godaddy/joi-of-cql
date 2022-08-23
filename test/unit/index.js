@@ -1,4 +1,4 @@
-
+/* eslint-disable no-loss-of-precision */
 
 var assume = require('assume');
 var undef;
@@ -293,8 +293,8 @@ describe('joi-of-cql', function () {
             phones: value,
             properties: {}
           };
-          const result = joiOfCql.validate(target, schema, { context: { operation: 'create' }});
-          assume(result.value.phones).equals(JSON.stringify(value));  
+          const result = joiOfCql.validate(target, schema, { context: { operation: 'create' } });
+          assume(result.value.phones).equals(JSON.stringify(value));
         });
       });
     });

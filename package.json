@@ -4,7 +4,9 @@
   "description": "Create cql type definitions from joi schema validations",
   "main": "index.js",
   "scripts": {
-    "test": "gulp unit"
+    "test": "mocha ./test --recursive",
+    "posttest": "npm run lint",
+    "lint": "eslint --fix ./test index.js"
   },
   "repository": {
     "type": "git",
@@ -18,12 +20,8 @@
   },
   "devDependencies": {
     "assume": "^2.2.0",
-    "eslint": "^6.7.0",
-    "eslint-config-godaddy": "^4.0.0",
-    "eslint-plugin-json": "^1.4.0",
-    "eslint-plugin-mocha": "^5.3.0",
-    "godaddy-test-tools": "^14.0.0",
-    "gulp": "^4.0.2",
+    "eslint": "^8.22.0",
+    "eslint-config-godaddy": "^6.1.0",
     "mocha": "^6.2.0"
   }
 }
