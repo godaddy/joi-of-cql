@@ -22,6 +22,6 @@
     "assume": "^2.2.0",
     "eslint": "^8.22.0",
     "eslint-config-godaddy": "^6.1.0",
-    "mocha": "^6.2.0"
+    "mocha": "^10.2.0"
   }
 }
