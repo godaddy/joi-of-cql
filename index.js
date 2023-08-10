@@ -22,7 +22,7 @@
  * @param {Array} value - a property of the list being converted
  */
 
-var joi = require('joi');
+var joi = require('@hapi/joi');
 var uuid = require('uuid');
 var undef;
 
