@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.5
+## 2.0.6
 
 - Upgrade `joi` to `@hapi/joi@15` & fix dev vulnerabilities
 
